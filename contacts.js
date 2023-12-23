@@ -17,9 +17,7 @@ async function listContacts() {
 }
 
 // write an array of contact objects to a file, to a JSON file
-async function writeContacts(contacts) {
-  await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
-}
+async function safeContacts(contacts) {}
 
 async function getContactById(contactId) {
   const contacts = await listContacts();
@@ -29,7 +27,6 @@ async function getContactById(contactId) {
 async function removeContact(contactId) {
   const contacts = await listContacts();
   const filteredContacts = contacts.filter((contact) => contact.id !== contactId);
-  await writeContacts(filteredContacts);
 }
 
 async function addContact(name, email, phone) {
@@ -40,15 +37,4 @@ async function addContact(name, email, phone) {
     email,
     phone,
   };
-
-  contacts.push(newContact);
-  await writeContacts(contacts);
-  return newContact;
 }
-
-module.exports = {
-  listContacts,
-  getContactById,
-  removeContact,
-  addContact,
-};
